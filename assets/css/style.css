@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-  max-width: 960px;
+  max-width: 800px;
   width: 100%;
   margin: 0 auto;
 }
@@ -13,6 +13,7 @@ body {
   background: #5d5b79;
   padding: 60px;
   margin-top: 50px;
+  margin-bottom: 50px;
   border-radius: 10px;
 }
 
@@ -21,4 +22,30 @@ body {
   font-size: 40px;
   color: white;
   text-align: center;
+}
+
+.hands {
+  margin: 0;
+  padding: 0;
+}
+
+.hand-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hands img {
+  width: 200px;
+}
+
+.rock {
+  width: 33.33%;
+}
+.paper {
+  width: 33.33%;
+  text-align: center;
+}
+.scissors {
+  width: 33.33%;
+  text-align: right;
 }
