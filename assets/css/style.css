@@ -1,0 +1,24 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: url('../images/bcg.png');
+}
+
+.container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.title {
+  background: #5d5b79;
+  padding: 60px;
+  margin-top: 50px;
+  border-radius: 10px;
+}
+
+.title h1 {
+  font-weight: 700;
+  font-size: 40px;
+  color: white;
+  text-align: center;
+}
