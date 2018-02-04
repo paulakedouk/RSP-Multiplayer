@@ -1,6 +1,27 @@
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: url('../images/bcg.png');
+  color: #5d5b79;
+}
+
+#name {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+#name-input {
+  padding: 10px;
+}
+
+.addName {
+  padding: 11px 30px;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  background: #5d5b79;
 }
 
 .container {
@@ -12,7 +33,6 @@ body {
 .title {
   background: #5d5b79;
   padding: 60px;
-  margin-top: 50px;
   margin-bottom: 50px;
   border-radius: 10px;
 }
@@ -25,27 +45,55 @@ body {
 }
 
 .hands {
-  margin: 0;
-  padding: 0;
+  text-align: center;
 }
 
-.hand-group {
-  display: flex;
-  flex-wrap: wrap;
+.hand-group,
+.results,
+.opponent {
+  background: white;
+  border: 3px solid #5d5b79;
+  border-radius: 10px;
+  padding: 30px 0;
 }
 
 .hands img {
-  width: 200px;
+  width: 50px;
 }
 
-.rock {
-  width: 33.33%;
+.rock img {
+  width: 50px;
+  margin-bottom: 20px;
 }
-.paper {
-  width: 33.33%;
+.paper img {
+  width: 60px;
+  margin-bottom: 20px;
+}
+
+.game {
+  display: flex;
+  margin-bottom: 100px;
+}
+
+.hand-group {
+  width: 30%;
+  margin-right: 20px;
+}
+
+.results {
+  width: 40%;
+  margin-right: 20px;
+}
+
+.opponent {
+  width: 30%;
+}
+
+.points h2 {
   text-align: center;
+  font-size: 40px;
 }
-.scissors {
-  width: 33.33%;
-  text-align: right;
+
+.points p {
+  text-align: center;
 }

@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rock, Paper and Scissors</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -17,20 +22,42 @@
             <h1>Rock, Paper and Scissors</h1>
         </div>
 
-        <div class="hand-group">
-            <div class="rock hands">
-                <img src="assets/images/rock.svg" alt="rock">
+        <form id="name">
+            <input type="text" id="name-input" placeholder="Name">
+            <input class="addName" type="submit" value="Start">
+        </form>
+        <div class="game">
+            <div class="hand-group left">
+                <div class="rock hands">
+                    <img src="assets/images/rock.svg" alt="rock">
+                </div>
+                <div class="paper hands">
+                    <img src="assets/images/paper.svg" alt="paper">
+                </div>
+                <div class="scissors hands">
+                    <img src="assets/images/scissors.svg" alt="scissors">
+                </div>
             </div>
-            <div class="paper hands">
-                <img src="assets/images/paper.svg" alt="paper">
+            <div class="results">
+                <class class="points">
+                    <p>Score</p>
+                    <h2>1 : 0</h2>
+                </class>
             </div>
-            <div class="scissors hands">
-                <img src="assets/images/scissors.svg" alt="scissors">
+            <div class="opponent">
+                <div class="rock hands op-hands">
+                    <img src="assets/images/rock.svg" alt="rock">
+                </div>
+                <div class="paper hands op-hands">
+                    <img src="assets/images/paper.svg" alt="paper">
+                </div>
+                <div class="scissors hands op-hands">
+                    <img src="assets/images/scissors.svg" alt="scissors">
+                </div>
             </div>
         </div>
-
-        <div class=" points"></div>
     </div>
+    <script src="assets/js/app.js"></script>
 </body>
 
 </html>
