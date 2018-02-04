@@ -5,16 +5,24 @@ body {
 }
 
 #name {
-  text-align: center;
   margin-bottom: 50px;
 }
 
-#name-input {
+#player1-name,
+#player2-name {
   padding: 10px;
 }
 
+.greeting-player1 {
+  position: absolute;
+}
+
+.greeting-player2 {
+  text-align: right;
+}
+
 .addName {
-  padding: 11px 30px;
+  padding: 11px 25px;
   border: none;
   color: white;
   text-align: center;
@@ -24,7 +32,8 @@ body {
   background: #5d5b79;
 }
 
-.player-name {
+.player-name,
+.opponent-name {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -101,4 +110,8 @@ body {
 
 .points p {
   text-align: center;
+}
+
+.waiting {
+  margin-bottom: 50px;
 }
