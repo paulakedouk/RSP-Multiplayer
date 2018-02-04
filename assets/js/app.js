@@ -46,20 +46,6 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
-var connectionsRef = database.ref('/connections');
-var connectedRef = database.ref('.info/connected');
-
-connectedRef.on('value', function(snap) {
-  if (snap.val()) {
-    var con = connectionsRef.push(true);
-    con.onDisconnect().remove();
-  }
-});
-
-connectionsRef.on('value', function(snap) {
-  $('#watchers').text(snap.numChildren());
-});
-
 database.ref('/players/').on(
   'value',
   function(snapshot) {
@@ -79,93 +65,125 @@ database.ref('/players/').on(
   }
 );
 
-function playerLogin() {
-  $('#player1-submit').on('click', function(event) {
-    event.preventDefault();
+$('#player1-submit').on('click', function(event) {
+  event.preventDefault();
 
-    // Get the input value for name
-    var playerName = $('#player1-name')
-      .val()
-      .trim();
+  // Get the input value for name
+  var playerName = $('#player1-input')
+    .val()
+    .trim();
 
-    console.log(playerName);
+  // console.log(playerName);
 
-    $('#name-input').val('');
-    player1.name = playerName;
-    player1.win = initialNum;
-    player1.lose = initialNum;
+  $('#player1-input').val('');
+  player1.name = playerName;
+  player1.win = initialNum;
+  player1.lose = initialNum;
 
-    // Save the new price in Firebase
-    database.ref('/players/player1').set({
-      name: player1.name,
-      win: player1.win,
-      lose: player1.lose
-    });
-
-    // var greeting = $('.greeting-player1');
-    // greeting.empty();
-    logged();
-
-    // Change the HTML to reflect the new name
-
-    $('.player-name')
-      .append($('<h3>').text(playerName))
-      .append($('<h4>'));
+  // Save the new price in Firebase
+  database.ref('/players/player1').push({
+    name: player1.name,
+    win: player1.win,
+    lose: player1.lose,
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
 
-  $('#player2-submit').on('click', function(event) {
-    event.preventDefault();
+  logged();
+});
 
-    // Get player name
-    var playerName = $('#player2-name')
-      .val()
-      .trim();
+$('#player2-submit').on('click', function(event) {
+  event.preventDefault();
 
-    console.log(playerName);
+  // Get player name
+  var playerName = $('#player2-input')
+    .val()
+    .trim();
 
-    $('#name-input').val('');
-    player2.name = playerName;
-    player2.win = initialNum;
-    player2.lose = initialNum;
+  // console.log(playerName);
 
-    database.ref('/players/player2').set({
-      name: player2.name,
-      win: player2.win,
-      lose: player2.lose
-    });
+  $('#player1-input').val('');
+  player2.name = playerName;
+  player2.win = initialNum;
+  player2.lose = initialNum;
 
-    // var greeting = $('.greeting-player2');
-    // greeting.empty();
-    logged();
-
-    // Show greeting
-    var hi = $('<h3>').text(playerName);
-
-    $('.opponent-name')
-      .append(hi)
-      .append($('<h4>'));
+  database.ref('/players/player2').push({
+    name: player2.name,
+    win: player2.win,
+    lose: player2.lose,
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
-}
+});
 
 function logged() {
   //   $('.greeting-player1').hide();
   //   $('.greeting-player2').hide();
   if (player1.name !== '') {
     $('.greeting-player1').hide();
+    $('.form-player2').hide();
+
     $('.player2-waiting')
       .text('Waiting for another player!')
       .addClass('waiting');
-    $('.form-player2').hide();
-    $('.player1-waiting').prepend(text);
   } else if (player2.name !== '') {
     $('.greeting-player2').hide();
+    $('.form-player1').hide();
+
     $('.player1-waiting')
       .text('Waiting for another player!')
       .addClass('waiting');
+
     $('.greeting-player1').css('position', 'initial');
-    $('.form-player1').hide();
-    $('.player2-waiting').prepend(text);
+    $('.player2-waiting').prepend('.player1-waiting');
   }
 }
 
-playerLogin();
+database.ref('/players/player1').on('child_added', function(snapshot) {
+  console.log(snapshot.val().name);
+  console.log(snapshot.val());
+
+  $('.player1-name').text(snapshot.val().name);
+  $('.greeting-player1').empty();
+});
+
+database.ref('/players/player2').on('child_added', function(snapshot) {
+  console.log(snapshot.val().name);
+  console.log(snapshot.val());
+
+  $('.player2-name').text(snapshot.val().name);
+  $('.greeting-player2').empty();
+});
+
+// var game = {
+//   playerUpdate: function() {
+//     database.ref('/players/player1').on('value', function(snapshot) {
+//       if (snapshot.val()) {
+//         player1.name = snapshot.val().name;
+//         logged();
+//       }
+//     });
+//     database.ref('/players/player2').on('value', function(snapshot) {
+//       if (snapshot.val()) {
+//         player2.name = snapshot.val().name;
+//         logged();
+//       }
+//     });
+//   },
+
+//   start: function() {
+//     database.ref('/players').on('value', function(snapshot) {
+//       if (
+//         snapshot
+//           .child('player1')
+//           .child('name')
+//           .val() &&
+//         snapshot
+//           .child('player2')
+//           .child('name')
+//           .val()
+//       ) {
+//         console.log('both logged');
+//         $('.player2-waiting').empty();
+//       }
+//     });
+//   }
+// };

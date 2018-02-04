@@ -25,7 +25,7 @@
         <div class="greeting greeting-player1">
             <div class="player1-waiting"></div>
             <form class="form-player1" id="name">
-                <input type="text" id="player1-name" placeholder="Player 1 Name">
+                <input type="text" id="player1-input" placeholder="Player 1 Name">
                 <button class="addName" id="player1-submit" type="submit">Start</button>
             </form>
         </div>
@@ -33,14 +33,14 @@
         <div class="greeting greeting-player2">
             <div class="player2-waiting"></div>
             <form class="form-player2" id="name">
-                <input type="text" id="player2-name" placeholder="Player 2 Name">
+                <input type="text" id="player2-input" placeholder="Player 2 Name">
                 <button class="addName" id="player2-submit" type="submit">Start</button>
             </form>
         </div>
 
         <div class="game">
-            <div class="hand-group player-side">
-                <div class="player-name"></div>
+            <div class="hand-group player1">
+                <div class="player1-name"></div>
                 <div class="rock hands">
                     <img src="assets/images/rock.svg" alt="rock">
                 </div>
@@ -57,8 +57,8 @@
                     <h2>1 : 0</h2>
                 </class>
             </div>
-            <div class="opponent-side">
-                <div class="opponent-name"></div>
+            <div class="player2-side">
+                <div class="player2-name"></div>
                 <div class="rock hands op-hands">
                     <img src="assets/images/rock.svg" alt="rock">
                 </div>
