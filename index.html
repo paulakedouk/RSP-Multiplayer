@@ -22,12 +22,16 @@
             <h1>Rock, Paper and Scissors</h1>
         </div>
 
-        <form id="name">
-            <input type="text" id="name-input" placeholder="Name">
-            <input class="addName" type="submit" value="Start">
-        </form>
+        <div class="greeting">
+            <form id="name">
+                <input type="text" id="name-input" placeholder="Name">
+                <button class="addName" id="add-name" type="submit">Start</button>
+            </form>
+        </div>
+
         <div class="game">
-            <div class="hand-group left">
+            <div class="hand-group player-side">
+                <div class="player-name"></div>
                 <div class="rock hands">
                     <img src="assets/images/rock.svg" alt="rock">
                 </div>
@@ -44,7 +48,8 @@
                     <h2>1 : 0</h2>
                 </class>
             </div>
-            <div class="opponent">
+            <div class="opponent-side">
+                <div class="opponent-name"></div>
                 <div class="rock hands op-hands">
                     <img src="assets/images/rock.svg" alt="rock">
                 </div>

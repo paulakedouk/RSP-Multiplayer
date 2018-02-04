@@ -24,6 +24,11 @@ body {
   background: #5d5b79;
 }
 
+.player-name {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .container {
   max-width: 800px;
   width: 100%;
@@ -50,7 +55,7 @@ body {
 
 .hand-group,
 .results,
-.opponent {
+.opponent-side {
   background: white;
   border: 3px solid #5d5b79;
   border-radius: 10px;
@@ -85,7 +90,7 @@ body {
   margin-right: 20px;
 }
 
-.opponent {
+.opponent-side {
   width: 30%;
 }
 
