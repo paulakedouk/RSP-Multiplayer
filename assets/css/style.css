@@ -58,11 +58,13 @@ body {
   text-align: center;
 }
 
-.hands {
+.hands-player1,
+.hands-player2 {
   text-align: center;
+  cursor: pointer;
 }
 
-.hand-group,
+.player1-side,
 .results,
 .player2-side {
   background: white;
@@ -71,7 +73,8 @@ body {
   padding: 30px 0;
 }
 
-.hands img {
+.hands-player1 img,
+.hands-player2 img {
   width: 50px;
 }
 
@@ -89,7 +92,7 @@ body {
   margin-bottom: 100px;
 }
 
-.hand-group {
+.player1-side {
   width: 30%;
   margin-right: 20px;
 }
