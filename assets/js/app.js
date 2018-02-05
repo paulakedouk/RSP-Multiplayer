@@ -55,8 +55,6 @@ $('#player1-submit').on('click', function(event) {
     .val()
     .trim();
 
-  var player1Choice;
-
   $('#player1-input').val('');
   player1.name = playerName;
   player1.win = initialNum;
@@ -109,6 +107,9 @@ function logged() {
     $('.player2-waiting')
       .text('Waiting for another player!')
       .addClass('waiting');
+
+    // var win = $('.player1-point').text(player1.win);
+    // $('.points').append(win);
   } else if (player2.name !== '') {
     // Hide the form
     $('.greeting-player2').hide();
@@ -139,6 +140,7 @@ database.ref('/players/player1').on('child_added', function(snapshot) {
       choice: choice,
       lose: player1.lose
     });
+    checkChoices();
   });
 });
 
@@ -159,5 +161,67 @@ database.ref('/players/player2').on('child_added', function(snapshot) {
       choice: choice,
       lose: player2.lose
     });
+    checkChoices();
   });
 });
+
+function score() {
+  database.ref('/players/player1').on('value', function(snapshot) {
+    console.log(snapshot.val().win);
+    $('.player1-point').text(snapshot.val().win);
+  });
+
+  database.ref('/players/player2').on('value', function(snapshot) {
+    console.log(snapshot.val().win);
+    $('.player2-point').text(snapshot.val().win);
+  });
+}
+
+function checkChoices() {
+  var player1Choice;
+  var player2Choice;
+
+  database
+    .ref('/players/player1')
+    .once('value')
+    .then(function(snapshot) {
+      player1Choice = snapshot.val().choice;
+
+      database
+        .ref('/players/player2')
+        .once('value')
+        .then(function(snapshot) {
+          player2Choice = snapshot.val().choice;
+          var win = snapshot.val().win;
+
+          if (player1Choice !== undefined && player2Choice !== undefined) {
+            console.log(player1Choice, player2Choice);
+            if (player1Choice === 'rock' && player2Choice === 'scissors') {
+              addWin('P1');
+              score();
+            } else if (player1Choice === 'scissors' && player2Choice === 'rock') {
+              addWin('P2');
+              score();
+            }
+          }
+        });
+    });
+}
+
+function addWin(player) {
+  if (player == 'P1') {
+    database.ref('/players/player1').set({
+      name: player1.name,
+      win: player1.win + 1,
+      choice: player1.choice,
+      lose: player1.lose
+    });
+  } else {
+    database.ref('/players/player2').set({
+      name: player2.name,
+      win: player2.win + 1,
+      choice: player2.choice,
+      lose: player2.lose
+    });
+  }
+}
