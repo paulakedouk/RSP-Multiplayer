@@ -78,10 +78,17 @@ body {
   width: 50px;
 }
 
+.hands-selected {
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px;
+}
+
 .rock img {
   width: 50px;
   margin-bottom: 20px;
 }
+
 .paper img {
   width: 60px;
   margin-bottom: 20px;

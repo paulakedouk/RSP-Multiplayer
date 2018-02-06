@@ -113,10 +113,13 @@ database.ref('/players/player1').on('child_added', function(snapshot) {
   var player1Name = $('.player1-name').text(snapshot.val().name);
   $('.greeting-player1').empty();
 
+  // When then player click on the hand
   $('.hands-player1').click(function() {
     var value = $(this)[0];
     var choice = $(value).attr('data-choice');
-    // player1Chosen = $('.group-player1').html(value);
+    $(value)
+      .find('img')
+      .addClass('hands-selected');
 
     database.ref('/players/player1').set({
       name: player1.name,
@@ -135,9 +138,10 @@ database.ref('/players/player2').on('child_added', function(snapshot) {
 
   $('.hands-player2').click(function() {
     var value = $(this)[0];
-    console.log(value);
     var choice = $(value).attr('data-choice');
-    // player2Chosen = $('.group-player2').html(value);
+    $(value)
+      .find('img')
+      .addClass('hands-selected');
 
     database.ref('/players/player2').set({
       name: player2.name,
@@ -207,6 +211,11 @@ function checkChoices() {
 
 function addWin(player) {
   if (player == 'P1') {
+    setTimeout(function() {
+      $('.hands-player1, .hands-player2')
+        .find('img')
+        .removeClass('hands-selected');
+    }, 2000);
     database.ref('/players/player1').update({
       name: player1.name,
       win: player1.win + 1,
@@ -214,6 +223,11 @@ function addWin(player) {
       lose: player1.lose
     });
   } else {
+    setTimeout(function() {
+      $('.hands-player1, .hands-player2')
+        .find('img')
+        .removeClass('hands-selected');
+    }, 2000);
     database.ref('/players/player2').update({
       name: player2.name,
       win: player2.win + 1,
