@@ -12,24 +12,6 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
-var logic = {
-  rock: {
-    rock: 'tie',
-    paper: 'lose',
-    scissors: 'win'
-  },
-  paper: {
-    rock: 'win',
-    paper: 'tie',
-    scissors: 'lose'
-  },
-  scissors: {
-    rock: 'lose',
-    paper: 'win',
-    scissors: 'tie'
-  }
-};
-
 var initialNum = 0;
 
 var player1 = {
@@ -55,12 +37,13 @@ $('#player1-submit').on('click', function(event) {
     .val()
     .trim();
 
+  // Reset the input form
   $('#player1-input').val('');
   player1.name = playerName;
   player1.win = initialNum;
   player1.lose = initialNum;
 
-  // Save the new price in Firebase
+  // Save the new player info in Firebase
   database.ref('/players/player1').push({
     name: player1.name,
     win: player1.win,
@@ -81,11 +64,13 @@ $('#player2-submit').on('click', function(event) {
     .val()
     .trim();
 
+  // Reset the input form
   $('#player1-input').val('');
   player2.name = playerName;
   player2.win = initialNum;
   player2.lose = initialNum;
 
+  // Save the new player info in Firebase
   database.ref('/players/player2').push({
     name: player2.name,
     win: player2.win,
@@ -95,7 +80,7 @@ $('#player2-submit').on('click', function(event) {
   });
 });
 
-// when the user is logged in, show a message to the other player
+// When the user is logged in, show a message to the other player
 function logged() {
   // Check if the player name exist
   if (player1.name !== '') {
@@ -107,9 +92,6 @@ function logged() {
     $('.player2-waiting')
       .text('Waiting for another player!')
       .addClass('waiting');
-
-    // var win = $('.player1-point').text(player1.win);
-    // $('.points').append(win);
   } else if (player2.name !== '') {
     // Hide the form
     $('.greeting-player2').hide();
@@ -125,14 +107,16 @@ function logged() {
   }
 }
 
+// Firebase watcher
 database.ref('/players/player1').on('child_added', function(snapshot) {
+  // Take player's name
   var player1Name = $('.player1-name').text(snapshot.val().name);
   $('.greeting-player1').empty();
 
   $('.hands-player1').click(function() {
     var value = $(this)[0];
     var choice = $(value).attr('data-choice');
-    player1Chosen = $('.group-player1').html(value);
+    // player1Chosen = $('.group-player1').html(value);
 
     database.ref('/players/player1').set({
       name: player1.name,
@@ -153,7 +137,7 @@ database.ref('/players/player2').on('child_added', function(snapshot) {
     var value = $(this)[0];
     console.log(value);
     var choice = $(value).attr('data-choice');
-    player2Chosen = $('.group-player2').html(value);
+    // player2Chosen = $('.group-player2').html(value);
 
     database.ref('/players/player2').set({
       name: player2.name,
@@ -202,6 +186,19 @@ function checkChoices() {
             } else if (player1Choice === 'scissors' && player2Choice === 'rock') {
               addWin('P2');
               score();
+            } else if (player1Choice === 'paper' && player2Choice === 'rock') {
+              addWin('P1');
+              score();
+            } else if (player1Choice === 'scissors' && player2Choice === 'paper') {
+              addWin('P1');
+              score();
+            } else if (player1Choice === 'rock' && player2Choice === 'paper') {
+              addWin('P2');
+              score();
+            } else if (player1Choice === 'paper' && player2Choice === 'scissors') {
+              addWin('P2');
+              score();
+            } else if (player1Choice === player2Choice) {
             }
           }
         });
@@ -210,18 +207,24 @@ function checkChoices() {
 
 function addWin(player) {
   if (player == 'P1') {
-    database.ref('/players/player1').set({
+    database.ref('/players/player1').update({
       name: player1.name,
       win: player1.win + 1,
       choice: player1.choice,
       lose: player1.lose
     });
   } else {
-    database.ref('/players/player2').set({
+    database.ref('/players/player2').update({
       name: player2.name,
       win: player2.win + 1,
       choice: player2.choice,
       lose: player2.lose
     });
   }
+
+  //   setTimeout(showNextRound, 2000);
 }
+
+// function showNextRound() {
+//   database.ref('/players/player1').on('child_added', function(snapshot) {});
+// }
