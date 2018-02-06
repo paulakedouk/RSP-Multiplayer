@@ -12,6 +12,35 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
+var connectionsRef = database.ref('/connections');
+var connectedRef = database.ref('.info/connected');
+
+connectedRef.on('value', function(snap) {
+  if (snap.val()) {
+    var con = connectionsRef.push(true);
+    con.onDisconnect().remove();
+  }
+});
+
+connectionsRef.on('value', function(snap) {
+  var test = $('#watchers').text(snap.numChildren());
+});
+
+// database.ref('/turn');
+
+// function listeners() {
+//   database.ref('/players/').on('value', function(snapshot) {
+//     if (player1 == undefined && player2 == undefined) {
+//       var container = $('.container');
+//       var $h1 = $('<h1>').text('Please wait until other players finish, then refresh screen.');
+//       container.empty().append($h1);
+//       throw new Error('Please wait until other players finish, then refresh screen.');
+//     }
+//   });
+// }
+
+// listeners();
+
 var initialNum = 0;
 
 var player1 = {
@@ -235,10 +264,4 @@ function addWin(player) {
       lose: player2.lose
     });
   }
-
-  //   setTimeout(showNextRound, 2000);
 }
-
-// function showNextRound() {
-//   database.ref('/players/player1').on('child_added', function(snapshot) {});
-// }
